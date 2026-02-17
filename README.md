@@ -18,98 +18,55 @@ This project integrates multiple scientific datasets:
  
 **Key approach**
 **1) Data cleaning & preprocessing**
-
-Removed non-informative text fields
-
-Handled missingness using:
-
-Median imputation for highly skewed variables (e.g., depth / distance-to-shore / SST climatology)
-
-MICE (Multivariate Imputation by Chained Equations) for variables missing-at-random 
-
-Reverse geocoding for country/state/city tagging (for regional analysis & dashboard filtering) 
-
+- Removed non-informative text fields
+- Handled missingness using:
+      - Median imputation for highly skewed variables (e.g., depth / distance-to-shore / SST climatology)
+      - MICE (Multivariate Imputation by Chained Equations) for variables missing-at-random
+  - Reverse geocoding for country/state/city tagging (for regional analysis & dashboard filtering) 
 **2) Spatio-temporal integration via 4D interpolation**
-
 Direct spatial joins between reef observations and GLODAP were too sparse (only ~140 matches even within 20km). To address this, the project implemented 4D Inverse Distance Weighting (IDW) interpolation using (lat, lon, depth, time) to generate synthetic but scientifically grounded local biogeochemical features for each reef observation. IDW was selected over alternatives (TPS, Kriging) due to better accuracy + scalability on large GLODAP volumes. 
-
 **3) Modelling**
-
 Regression (predict bleaching %)
 Best performers:
-
-**ExtraTreesRegressor**: R² ≈ 0.67, RMSE ≈ 10.02
-
-**RandomForestRegressor:** R² ≈ 0.67, RMSE ≈ 10.06 
-
+- **ExtraTreesRegressor**: R² ≈ 0.67, RMSE ≈ 10.02
+- **RandomForestRegressor:** R² ≈ 0.67, RMSE ≈ 10.06 
 **Classification (predict risk level)**
 Risk thresholds were aligned to severity bands:
-
-Low: <10%
-
-Medium: 10–30%
-
-High: >30% 
-
+- Low: <10%
+- Medium: 10–30%
+- High: >30% 
 Models evaluated included XGBoost, LightGBM, Random Forest, KNN, SVM (with class imbalance acknowledged and SMOTE explored). 
-
 **4) Explainability**
-
 Model drivers were interpreted with SHAP, consistently highlighting variables like temperature and cyclone frequency among the most influential predictors. 
-
 **5) Time-based forecasting (exploratory)**
-
 SARIMA and Prophet were tested but limited by irregular sampling / non-continuous time series; a simpler trend-based projection approach was used for practical scenario forecasting within the dashboard. 
 
 **The R.E.E.F. dashboard (Streamlit**)
-
 The final deliverable is a single-page Streamlit app that combines descriptive + predictive analytics for decision support. Key features include: 
+- **KPI Cards:** dataset coverage, bleaching stats, scope overview
+- **Descriptive Analytics:**
+  - top affected realms
+  - bleaching trendline (2000–2019)
+  - SHAP feature importance summary 
 
+- **Region & Year Forecast:**
+  - select realm + forecast year
+  - view projected environmental factors + predicted bleaching
+  - interactive severity map of sampling sites 
 
-**KPI Cards:** dataset coverage, bleaching stats, scope overview
-**Descriptive Analytics:**
+- **Scenario / “What-if” Predictor:**
+  - manually input environmental conditions
+  - instant bleaching prediction + severity gauge 
 
-top affected realms
+- **Bulk CSV Prediction:**
+  - upload many sites at once
+  - auto-fills missing required columns with training means for usability
+  - expects features such as: Temperature_Kelvin, SSTA, SST, Depth, Turbidity, Windspeed, Cyclone_Frequency, G2oxygen 
+- **Model Confidence indicator shown in the UI (reported ~71%) **
 
-bleaching trendline (2000–2019)
-
-SHAP feature importance summary 
-
-
-**Region & Year Forecast:**
-
-select realm + forecast year
-
-view projected environmental factors + predicted bleaching
-
-interactive severity map of sampling sites 
-
-
-**Scenario / “What-if” Predictor:**
-
-manually input environmental conditions
-
-instant bleaching prediction + severity gauge 
-
-
-**Bulk CSV Prediction:**
-
-upload many sites at once
-
-auto-fills missing required columns with training means for usability
-
-expects features such as: Temperature_Kelvin, SSTA, SST, Depth, Turbidity, Windspeed, Cyclone_Frequency, G2oxygen 
-
-Model Confidence indicator shown in the UI (reported ~71%) 
-
-**Tech stack**
-
-Python (pandas, numpy, scikit-learn)
-
-Imputation: MICE
-
-Geospatial: cKDTree / spatial indexing approaches; 4D IDW interpolation
-
-Explainability: SHAP
-
-Dashboard: Streamlit 
+- **Tech stack**
+- Python (pandas, numpy, scikit-learn)
+- Imputation: MICE
+- Geospatial: cKDTree / spatial indexing approaches; 4D IDW interpolation
+- Explainability: SHAP
+- Dashboard: Streamlit 
