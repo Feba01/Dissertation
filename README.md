@@ -24,8 +24,10 @@ This project integrates multiple scientific datasets:
       - Median imputation for highly skewed variables (e.g., depth / distance-to-shore / SST climatology)
       - MICE (Multivariate Imputation by Chained Equations) for variables missing-at-random
   - Reverse geocoding for country/state/city tagging (for regional analysis & dashboard filtering) 
+
 **2) Spatio-temporal integration via 4D interpolation**
 Direct spatial joins between reef observations and GLODAP were too sparse (only ~140 matches even within 20km). To address this, the project implemented 4D Inverse Distance Weighting (IDW) interpolation using (lat, lon, depth, time) to generate synthetic but scientifically grounded local biogeochemical features for each reef observation. IDW was selected over alternatives (TPS, Kriging) due to better accuracy + scalability on large GLODAP volumes. 
+
 **3) Modelling**
 Regression (predict bleaching %)
 Best performers:
@@ -37,8 +39,10 @@ Risk thresholds were aligned to severity bands:
 - Medium: 10–30%
 - High: >30% 
 Models evaluated included XGBoost, LightGBM, Random Forest, KNN, SVM (with class imbalance acknowledged and SMOTE explored). 
+
 **4) Explainability**
 Model drivers were interpreted with SHAP, consistently highlighting variables like temperature and cyclone frequency among the most influential predictors. 
+
 **5) Time-based forecasting (exploratory)**
 SARIMA and Prophet were tested but limited by irregular sampling / non-continuous time series; a simpler trend-based projection approach was used for practical scenario forecasting within the dashboard. 
 
