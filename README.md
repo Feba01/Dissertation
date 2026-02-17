@@ -17,6 +17,7 @@ This project integrates multiple scientific datasets:
 3) ICRI Coral Restoration Database: used to support interpretive, recommendation-oriented outputs in the dashboard 
  
 **Key approach**
+
 **1) Data cleaning & preprocessing**
 - Removed non-informative text fields
 - Handled missingness using:
