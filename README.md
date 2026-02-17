@@ -67,7 +67,7 @@ The final deliverable is a single-page Streamlit app that combines descriptive +
   - upload many sites at once
   - auto-fills missing required columns with training means for usability
   - expects features such as: Temperature_Kelvin, SSTA, SST, Depth, Turbidity, Windspeed, Cyclone_Frequency, G2oxygen 
-- **Model Confidence indicator shown in the UI (reported ~71%) **
+- Model Confidence indicator shown in the UI (reported ~71%)
 
 - **Tech stack**
 - Python (pandas, numpy, scikit-learn)
