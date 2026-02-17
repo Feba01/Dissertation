@@ -1,4 +1,4 @@
-**R.E.E.F. — ML-Enabled Coral Reef Bleaching Prediction**
+**R.E.E.F. : ML-Enabled Coral Reef Bleaching Prediction**
 
 Rapid Environmental Early-warning Forecaster (R.E.E.F.) is a machine learning–powered early warning system designed to help shift coral reef conservation from reactive monitoring to proactive, data-driven intervention. It predicts coral bleaching intensity (and risk categories) using integrated reef survey observations and ocean biogeochemical variables, and delivers insights through an interactive Streamlit dashboard. 
 
